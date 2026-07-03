@@ -149,9 +149,9 @@ public class DashboardServiceImpl implements DashboardService {
 
     private List<DashboardResponse.ChartDataPoint> getMonthlyTrend(Long userId, LocalDate start, LocalDate end) {
         List<Object[]> incomeData = transactionRepository.monthlyTotalsByType(
-            userId, TransactionType.INCOME, start.withDayOfMonth(1));
+            userId, TransactionType.INCOME.name(), start.withDayOfMonth(1));
         List<Object[]> expenseData = transactionRepository.monthlyTotalsByType(
-            userId, TransactionType.EXPENSE, start.withDayOfMonth(1));
+            userId, TransactionType.EXPENSE.name(), start.withDayOfMonth(1));
 
         Map<String, Double> incomeMap = new HashMap<>();
         Map<String, Double> expenseMap = new HashMap<>();

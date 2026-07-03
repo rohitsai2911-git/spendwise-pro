@@ -45,10 +45,10 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
 
     Page<Transaction> findByUserIdAndType(Long userId, TransactionType type, Pageable pageable);
 
-    @Query("SELECT FUNCTION('MONTH', t.transactionDate), FUNCTION('YEAR', t.transactionDate), COALESCE(SUM(t.amount), 0) FROM Transaction t WHERE t.user.id = :userId AND t.type = :type AND t.transactionDate >= :since GROUP BY FUNCTION('YEAR', t.transactionDate), FUNCTION('MONTH', t.transactionDate) ORDER BY FUNCTION('YEAR', t.transactionDate), FUNCTION('MONTH', t.transactionDate)")
+    @Query(value = "SELECT CAST(EXTRACT(MONTH FROM t.transaction_date) AS INTEGER), CAST(EXTRACT(YEAR FROM t.transaction_date) AS INTEGER), COALESCE(SUM(t.amount), 0) FROM transactions t WHERE t.user_id = :userId AND t.type = CAST(:type AS VARCHAR) AND t.transaction_date >= :since GROUP BY EXTRACT(YEAR FROM t.transaction_date), EXTRACT(MONTH FROM t.transaction_date) ORDER BY EXTRACT(YEAR FROM t.transaction_date), EXTRACT(MONTH FROM t.transaction_date)", nativeQuery = true)
     List<Object[]> monthlyTotalsByType(
         @Param("userId") Long userId,
-        @Param("type") TransactionType type,
+        @Param("type") String type,
         @Param("since") LocalDate since);
 
     @Query("SELECT t FROM Transaction t WHERE t.user.id = :userId AND " +
