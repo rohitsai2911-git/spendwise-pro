@@ -30,6 +30,11 @@ public class JwtTokenProvider {
         } catch (Exception e) {
             keyBytes = jwtSecret.getBytes();
         }
+        if (keyBytes.length < 32) {
+            byte[] padded = new byte[32];
+            System.arraycopy(keyBytes, 0, padded, 0, Math.min(keyBytes.length, 32));
+            keyBytes = padded;
+        }
         this.jwtSecret = Keys.hmacShaKeyFor(keyBytes);
         this.jwtExpirationMs = jwtExpirationMs;
         this.rememberMeExpirationMs = rememberMeExpirationMs;
