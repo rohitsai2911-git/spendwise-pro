@@ -24,7 +24,13 @@ public class JwtTokenProvider {
             @Value("${app.jwt.secret}") String jwtSecret,
             @Value("${app.jwt.expiration-ms}") long jwtExpirationMs,
             @Value("${app.jwt.remember-me-expiration-ms}") long rememberMeExpirationMs) {
-        this.jwtSecret = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
+        byte[] keyBytes;
+        try {
+            keyBytes = Decoders.BASE64.decode(jwtSecret);
+        } catch (Exception e) {
+            keyBytes = jwtSecret.getBytes();
+        }
+        this.jwtSecret = Keys.hmacShaKeyFor(keyBytes);
         this.jwtExpirationMs = jwtExpirationMs;
         this.rememberMeExpirationMs = rememberMeExpirationMs;
     }
