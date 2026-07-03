@@ -1,5 +1,5 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   LayoutDashboard, Wallet, ArrowDownCircle, ArrowUpCircle,
   PiggyBank, Target, BarChart3, Bell, Settings,
