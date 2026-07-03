@@ -50,7 +50,7 @@ app:
     remember-me-expiration-ms: 2592000000
 
   cors:
-    allowed-origins: http://localhost:5173,http://localhost:3000
+    allowed-origins: http://localhost:5173,http://localhost:3000,https://rohitsai2911-git.github.io,https://spendwise-pro.onrender.com
 
   upload:
     dir: uploads/profiles
